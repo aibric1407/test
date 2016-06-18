@@ -1,0 +1,59 @@
+html,body {
+	height: 100%;
+	width: 100%;
+	background-color: #DCE3EA;
+}
+
+* {
+	font-family: "Roboto", sans-serif;
+}
+
+input {
+	border-radius: 5px !important;
+}
+
+.header {
+	background-color: #4673A2;
+	color: #FFFFFF;
+}
+
+.devide {
+	margin-top: 20px;
+}
+
+.content {
+	margin-top: 30px;
+	height: 100%;
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #DCE3EA;
+
+}
+
+
+.fit {
+	width: 100%;
+}
+
+.align {
+	text-align: center;
+}
+
+.vcenter {
+    vertical-align: middle;
+    float: none;
+}
+
+table, th, td {
+    text-align: center;
+}
+
+table tr:first-child{
+  background-color: #4673A2;
+}
+
+
+table tr:nth-child(even){
+	background: #FFFFFF;
+}
