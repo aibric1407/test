@@ -13,6 +13,9 @@
 		<script type="text/javascript" src="js/admin.js"></script>
 		<script type="text/javascript" src="js/user.js"></script>
 		<script type="text/javascript" src="js/controller.js"></script>
+
+		<script type="text/javascript" src="lib/encoder.js"></script>
+		<script type="text/javascript" src="lib/lzw_encoder.js"></script>
 	</head>
 	<body>
 
@@ -22,7 +25,8 @@
 				<div class="col-md-12 header">
 					<div class="col-md-3">
 						<button type="button" class="btn btn-default btn-lg">
-						  <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+						  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						  Admin Panel
 						</button>
 					</div>
 				</div>
@@ -78,13 +82,13 @@
 				      	<div id="table_content" class="col-md-12">
 				      		<table id="table" class="table table-condensed">
 				      			<tr>
-				      				<th>#</th>
+				      				<th><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></th>
 				      				<th>Full Name</th>
 					      			<th>Username</th>
 					      			<th>E-Mail</th>
 					      			<th>Password</th>
-					      			<th></th>
-					      			<th></th>
+					      			<th><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></th>
+					      			<th><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></th>
 				      			</tr>
 				      		</table>
 				      	</div>
@@ -95,10 +99,23 @@
 				      	</div>
 			      	</div>
 
+			      	<div class="row devide">
+			      		<div class="col-md-12">
+			      			<nav>
+							  <ul class="pagination" id="pagination">
+							    <button class="btn btn-primary" id="previous_page" disabled ><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+
+							    <button class="btn btn-primary" id="next_page" disabled ><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+
+							  </ul>
+							</nav>
+			      		</div>
+			      	</div>
+
 			      	<!-- ADD USER BUTTON -->
 			      	<div class="row devide"> 
 			      		<div class="col-md-12">
-				      			<button id="new_user_button" class="btn btn-primary pull-right" type="button">Add User</button>
+				      			<button id="new_user_button" class="btn btn-primary pull-right" type="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add User</button>
 			      		</div>
 			      	</div>     	
 				</div>
@@ -107,7 +124,7 @@
 				<div id="add_user" style="display:none">
 					<div class="row">
 						<div class="col-md-4">
-			      			<button id="anu_back_button" class="btn btn-primary vcenter" type="button">Back</button>
+			      			<button id="anu_back_button" class="btn btn-primary vcenter" type="button"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Back</button>
 			      		</div>
 			      		<div class="col-md-4">
 			      			<h3 class="align">New user</h3>
@@ -138,18 +155,18 @@
 			      	<div class="row devide">
 			      		<div class="col-md-6 col-md-offset-3">
 				            <div class="input-group fit">
-				                <input id="password" type="text" class="form-control" placeholder="Password" />
+				                <input id="password" type="password" class="form-control" placeholder="Password" />
 				            </div>
 			      		</div>
 			      	</div>
 
 			      	<div id="add_message" class="col-md-12 devide" style="display:none">
-			      		<div class="alert alert-info" role="alert"> Please enter all fields, if all fields are set you have entered invalid email.</div>
+			      		<div id="add_message_text" class="alert alert-info" role="alert"> Please enter all fields, if all fields are set you have entered invalid email.</div>
 					</div>
 
 			      	<div class="row devide">
 				      	<div class="col-md-12">
-			      			<button id="anu_add_user" class="btn btn-primary pull-right" type="button">Add User</button>
+			      			<button id="anu_add_user" class="btn btn-primary pull-right" type="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Add User</button>
 			      		</div>
 			      	</div>
 				</div>
@@ -158,7 +175,7 @@
 				<div id="edit_user" style="display:none">
 					<div class="row">
 						<div class="col-md-4">
-			      			<button id="eu_back_button" class="btn btn-primary" type="button">Back</button>
+			      			<button id="eu_back_button" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Back</button>
 			      		</div>
 			      		<div class="col-md-4">
 			      			<h2 class="align">Edit user</h2>
@@ -189,18 +206,18 @@
 			      	<div class="row devide">
 			      		<div class="col-md-6 col-md-offset-3">
 				            <div class="input-group fit" >
-				                <input id="edit_password" type="text" class="form-control" placeholder="Password" />
+				                <input id="edit_password" type="password" class="form-control" placeholder="Password" />
 				            </div>
 			      		</div>
 			      	</div>
 
 			      	<div id="edit_message" class="col-md-12 devide" style="display:none">
-			      		<div class="alert alert-info" role="alert"> Please enter all fields, if all fields are set you have entered invalid email.</div>
+			      		<div id="edit_message_text" class="alert alert-info" role="alert"> Please enter all fields, if all fields are set you have entered invalid email.</div>
 					</div>
 
 			      	<div class="row devide">
 				      	<div class="col-md-12">
-			      			<button id="eu_save" class="btn btn-primary pull-right" type="button">Save</button>
+			      			<button id="eu_save" class="btn btn-primary pull-right" type="button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>Save</button>
 			      		</div>
 			      	</div>
 				</div>

@@ -45,14 +45,22 @@ input {
     float: none;
 }
 
+table tr td a:hover {
+	color: #000000;
+	text-decoration: none;
+}
+
 table, th, td {
     text-align: center;
 }
 
 table tr:first-child{
-  background-color: #4673A2;
+  background-color: #4673A2!important;
 }
 
+table tr:nth-child(odd){
+	background: #90ACC8;
+}
 
 table tr:nth-child(even){
 	background: #FFFFFF;

@@ -2,7 +2,7 @@ var admin = new Admin();
 
 window.onload = function() {
 	admin.load();
-	admin.listUsers(admin.users);
+	admin.listPagination(admin.users);
 
 	$("#new_user_button").click(function(){
 	    $("#list_users").hide();
@@ -28,12 +28,31 @@ window.onload = function() {
 	    if (admin.validateAdd(name,username,email,password)) {
 	    	var user = new User(name,username,email,password);
 		    admin.addUser(user);
-		    admin.listUsers(admin.users);
+		    admin.listPagination(admin.users);
+
+		    $("#name").val("");
+	    	$("#username").val("");
+	    	$("#email").val("");
+	    	$("#password").val("");
+
 		    $("#list_users").show();
 			$("#add_user").hide();
 	    }
 	    
 	});
+
+	$("#previous_page").click(function(){
+	    admin.previousPage();
+	    
+	});
+
+	$("#next_page").click(function(){
+	   	admin.nextPage();
+	    
+	});
+
+
+
 
 	$('#search').on('input', function() {
 		var selectedFilter = $("input[name='searchFilter']:checked").val();
