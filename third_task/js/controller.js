@@ -1,5 +1,9 @@
 var admin = new Admin();
 
+/**
+ * Handling of events of user interaction
+ *
+ */
 window.onload = function() {
 	admin.load();
 	admin.listPagination(admin.users);
@@ -50,9 +54,6 @@ window.onload = function() {
 	   	admin.nextPage();
 	    
 	});
-
-
-
 
 	$('#search').on('input', function() {
 		var selectedFilter = $("input[name='searchFilter']:checked").val();

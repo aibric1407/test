@@ -1,3 +1,7 @@
+/**
+ * User class
+ *
+ */
 var User = function (fullName,username,email,password) {
 	this.id = 0;
 	this.username;

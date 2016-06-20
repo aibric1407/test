@@ -1,7 +1,18 @@
+/**
+ * Admin class
+ *
+ */
 var Admin = function() {
     this.users = [];
     this.currentPage = 1;
 
+    /**
+     * Lists all users and puts them  in table
+     *
+     * @param array data
+     * @param int index
+     *
+     */
     this.listUsers = function (data,index) {
     	$('#table tr td').remove();
     	var helperThis = this;
@@ -70,23 +81,42 @@ var Admin = function() {
 		
     };
 
+
+    /**
+     * Adds new user
+     *
+     * @param object user
+     *
+     */
     this.addUser = function (user) {
     	this.users.push(user);
     	this.save();
 
     };
 
+    /**
+     * Delets user
+     *
+     * @param int id
+     *
+     */
     this.deleteUser = function (id) {
     	for (var i = 0; i < this.users.length; i++) {
     		if (this.users[i].id == id) {
     			this.users.splice(i, 1);
     		}
     	}
-        console.log(this.users,"delete");
     	this.listPagination(this.users);
     	this.save();
     }
 
+    /**
+     * Searches user with id
+     *
+     * @param int id
+     * @return object user
+     *
+     */
     this.getUserByID = function (id) {
     	for (var i = 0; i < this.users.length; i++) {
     		if (this.users[i].id == id) {
@@ -95,6 +125,12 @@ var Admin = function() {
     	}
     }
 
+    /**
+     * Edits user with wanted id
+     *
+     * @param int id
+     *
+     */
     this.editUser = function (id) {
     	$("#list_users").hide();
 		$("#edit_user").show();
@@ -117,6 +153,12 @@ var Admin = function() {
 		});
     }
 
+    /**
+     * Saves edited user
+     *
+     * @param object user
+     *
+     */
     this.saveEditedUser = function (user) {
     	user.fullName = $("#edit_name").val();
     	user.username = $("#edit_username").val();
@@ -127,6 +169,14 @@ var Admin = function() {
     	this.save();
     }
 
+    /**
+     * Filter users by wanted filter and returns users that matches entered input
+     *
+     * @param string input
+     *
+     * @param string filter
+     *
+     */
     this.filterUsers = function (input,filter) {
     	var filtered_users = [];
     	for(var i = 0; i < this.users.length; i++) {
@@ -145,6 +195,16 @@ var Admin = function() {
     	this.listPagination(filtered_users);
     }
 
+    /**
+     * Checks if there is duplicate user when adding user
+     *
+     * @param string name
+     * @param string username
+     * @param string email
+     * @param string password
+     *
+     * @return array 
+     */
     this.duplicatesValidation = function(name,username,email,password){
         var results = [];
         for (var i = 0; i <this.users.length; i++) {
@@ -164,6 +224,16 @@ var Admin = function() {
         return [true];
     }
 
+    /**
+     * Checks if there is duplicate user when editing user
+     *
+     * @param string name
+     * @param string username
+     * @param string email
+     * @param string password
+     *
+     * @return array 
+     */
     this.duplicatesValidationEdit = function(user,name,username,email,password){
         var results = [];
         for (var i = 0; i <this.users.length; i++) {
@@ -183,6 +253,16 @@ var Admin = function() {
         return [true];
     }
 
+    /**
+     * Validates fields when adding user
+     *
+     * @param string name
+     * @param string username
+     * @param string email
+     * @param string password
+     *
+     * @return bool 
+     */
     this.validateAdd = function (name,username,email,password) {
     	var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
         var duplicates = this.duplicatesValidation(name,username,email,password);
@@ -203,6 +283,16 @@ var Admin = function() {
     	return false;	
     }
 
+    /**
+     * Validates fields when editing user
+     *
+     * @param string name
+     * @param string username
+     * @param string email
+     * @param string password
+     *
+     * @return bool 
+     */
     this.validateEdit = function (user,name,username,email,password) {
     	var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
 
@@ -224,6 +314,13 @@ var Admin = function() {
     	return false;	
     }
 
+
+    /**
+     * Handles paging of users
+     *
+     * @param array users
+     *
+     */
     this.listPagination = function(users){
 
         var recordsPerPage = 10;
@@ -254,27 +351,41 @@ var Admin = function() {
 
     }
 
+    /**
+     * Handles action on next page button
+     *
+     *
+     */
     this.nextPage = function () {
-        console.log("nextPage");
         this.currentPage++;
         this.listPagination(this.users);
 
     }
 
+    /**
+     * Handles action on previous page button
+     *
+     *
+     */
     this.previousPage = function () {
-        console.log("previousPage")
         this.currentPage--;
         this.listPagination(this.users);
     }
 
-
-
+    /**
+     * Compresses users data, encodes data and saves into local storage
+     *
+     */
     this.save = function () {
         var compreessedData = lzw_encode(JSON.stringify(this.users));
         var encodedData = Base64.encode(compreessedData);
 		localStorage.setItem('users', encodedData);
     }
 
+    /**
+     * Uncompresses users data, decodes data and loades users from local storage
+     *
+     */
     this.load = function () {
     	this.users = [];
     	if (localStorage.getItem('users') != null) {
